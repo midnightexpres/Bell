@@ -1,0 +1,13 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutEng.cshtml";
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1 class="text-center">Tickiting system</h1>
+    <p class="lead">
+        Welcome to the ticket management system, your request will be handled as soon as possible.
+    </p>
+    @Html.ActionLink("Submit a ticket", "CreateEng", "billets", null, new { @class = "btn btn-primary btn-lg" });
+</div>
+

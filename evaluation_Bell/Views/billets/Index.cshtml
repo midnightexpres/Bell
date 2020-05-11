@@ -1,0 +1,73 @@
+﻿@model IEnumerable<evaluation_Bell.Models.billet>
+
+@{
+    ViewBag.Title = "Tickets";
+}
+
+<h2>Tiquets</h2>
+
+
+@using (Html.BeginForm("Index", "billets", FormMethod.Get))
+{
+    //Options de recherches
+    <b> Options de recherche: </b>
+    @Html.RadioButton("option", "projNom") <text>Projet</text> 
+    @Html.RadioButton("option", "depName") <text>Departement</text>
+    @Html.RadioButton("option", "emploName") <text>Employe</text> 
+    @Html.RadioButton("option", "description")<text>Description</text> 
+    @Html.TextBox("target")<input  type="submit" name="submit" value="Chercher" />
+}
+<div>
+
+</div>
+
+
+
+
+
+
+<table class="table table-striped">
+    <tr>
+        <th scope="col">
+            Nom du projet
+        </th >
+        <th scope="col">
+            Date et heure de Creation
+        </th>
+        <th scope="col">
+            Departement
+        </th>
+        <th scope="col">
+            Nom Employe
+        </th>
+        <th scope="col">
+            Description
+        </th>
+
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr scope="row">
+            <td>
+                @Html.DisplayFor(modelItem => item.nomProjet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateCreation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.departement.nomDepartement)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.employe.nomEmploye)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="bellEvaluationDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="billet">
+    <Key>
+      <PropertyRef Name="idBillet" />
+    </Key>
+    <Property Name="idBillet" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nomProjet" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="description" Type="nvarchar" MaxLength="1000" Nullable="false" />
+    <Property Name="dateCreation" Type="datetime" />
+    <Property Name="idDepartement" Type="int" Nullable="false" />
+    <Property Name="idEmploye" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="departement">
+    <Key>
+      <PropertyRef Name="idDepartement" />
+    </Key>
+    <Property Name="idDepartement" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nomDepartement" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="employe">
+    <Key>
+      <PropertyRef Name="idEmploye" />
+    </Key>
+    <Property Name="idEmploye" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idDepartement" Type="int" Nullable="false" />
+    <Property Name="nomEmploye" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="Fk_billetDepartement">
+    <End Role="departement" Type="Self.departement" Multiplicity="1" />
+    <End Role="billet" Type="Self.billet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="departement">
+        <PropertyRef Name="idDepartement" />
+      </Principal>
+      <Dependent Role="billet">
+        <PropertyRef Name="idDepartement" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_billetEmploye">
+    <End Role="employe" Type="Self.employe" Multiplicity="1" />
+    <End Role="billet" Type="Self.billet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employe">
+        <PropertyRef Name="idEmploye" />
+      </Principal>
+      <Dependent Role="billet">
+        <PropertyRef Name="idEmploye" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_departement">
+    <End Role="departement" Type="Self.departement" Multiplicity="1" />
+    <End Role="employe" Type="Self.employe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="departement">
+        <PropertyRef Name="idDepartement" />
+      </Principal>
+      <Dependent Role="employe">
+        <PropertyRef Name="idDepartement" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="bellEvaluationDBModelStoreContainer">
+    <EntitySet Name="billet" EntityType="Self.billet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="departement" EntityType="Self.departement" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="employe" EntityType="Self.employe" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="Fk_billetDepartement" Association="Self.Fk_billetDepartement">
+      <End Role="departement" EntitySet="departement" />
+      <End Role="billet" EntitySet="billet" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_billetEmploye" Association="Self.Fk_billetEmploye">
+      <End Role="employe" EntitySet="employe" />
+      <End Role="billet" EntitySet="billet" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_departement" Association="Self.Fk_departement">
+      <End Role="departement" EntitySet="departement" />
+      <End Role="employe" EntitySet="employe" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

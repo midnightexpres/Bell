@@ -1,0 +1,64 @@
+﻿@model IEnumerable<evaluation_Bell.Models.billet>
+
+@{
+    Layout = "~/Views/Shared/_LayoutEng.cshtml";
+    ViewBag.Title = "Tickets";
+}
+
+<h2>Tickets</h2>
+
+
+@using (Html.BeginForm("IndexEng", "billets", FormMethod.Get))
+{
+    //searching options
+    <b> Searching options: </b>
+    @Html.RadioButton("option", "projNom") <text>Project</text>
+    @Html.RadioButton("option", "depName") <text>Departement</text>
+    @Html.RadioButton("option", "emploName") <text>Employee</text>
+    @Html.RadioButton("option", "description")<text>Description</text>
+    @Html.TextBox("target")<input type="submit" name="submit" value="Search" />
+}
+
+<table class="table table-striped">
+    <tr>
+        <th  scope="col">
+            Project Name
+        </th>
+        <th  scope="col">
+            Creation date and time
+        </th>
+        <th  scope="col">
+            Departement
+        </th>
+        <th  scope="col">
+            Employee Name
+        </th>
+        <th  scope="col">
+            Description
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr scope="row">
+            <td>
+                @Html.DisplayFor(modelItem => item.nomProjet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateCreation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.departement.nomDepartement)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.employe.nomEmploye)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+           
+        </tr>
+    }
+
+</table>

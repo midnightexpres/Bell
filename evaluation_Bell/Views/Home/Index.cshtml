@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1 class="text-center">Systeme de billets</h1>
+    <p class="lead">Bienvenu dans le systeme de gestion de tickets, vos requetes seront traitees dans le plus brefs delais.</p>
+     @Html.ActionLink("Souettre un ticket", "Create", "billets", null, new { @class = "btn btn-primary btn-lg" });
+   
+</div>

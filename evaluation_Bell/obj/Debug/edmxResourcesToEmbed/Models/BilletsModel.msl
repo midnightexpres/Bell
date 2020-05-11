@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="bellEvaluationDBModelStoreContainer" CdmEntityContainer="bellEvaluationDBEntities">
+    <EntitySetMapping Name="billet">
+      <EntityTypeMapping TypeName="bellEvaluationDBModel.billet">
+        <MappingFragment StoreEntitySet="billet">
+          <ScalarProperty Name="idBillet" ColumnName="idBillet" />
+          <ScalarProperty Name="nomProjet" ColumnName="nomProjet" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="dateCreation" ColumnName="dateCreation" />
+          <ScalarProperty Name="idDepartement" ColumnName="idDepartement" />
+          <ScalarProperty Name="idEmploye" ColumnName="idEmploye" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="departement">
+      <EntityTypeMapping TypeName="bellEvaluationDBModel.departement">
+        <MappingFragment StoreEntitySet="departement">
+          <ScalarProperty Name="idDepartement" ColumnName="idDepartement" />
+          <ScalarProperty Name="nomDepartement" ColumnName="nomDepartement" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="employe">
+      <EntityTypeMapping TypeName="bellEvaluationDBModel.employe">
+        <MappingFragment StoreEntitySet="employe">
+          <ScalarProperty Name="idEmploye" ColumnName="idEmploye" />
+          <ScalarProperty Name="idDepartement" ColumnName="idDepartement" />
+          <ScalarProperty Name="nomEmploye" ColumnName="nomEmploye" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

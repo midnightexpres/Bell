@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="bellEvaluationDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="billet">
+          <Key>
+            <PropertyRef Name="idBillet" />
+          </Key>
+          <Property Name="idBillet" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomProjet" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="dateCreation" Type="datetime" />
+          <Property Name="idDepartement" Type="int" Nullable="false" />
+          <Property Name="idEmploye" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="departement">
+          <Key>
+            <PropertyRef Name="idDepartement" />
+          </Key>
+          <Property Name="idDepartement" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomDepartement" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="employe">
+          <Key>
+            <PropertyRef Name="idEmploye" />
+          </Key>
+          <Property Name="idEmploye" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idDepartement" Type="int" Nullable="false" />
+          <Property Name="nomEmploye" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="Fk_billetDepartement">
+          <End Role="departement" Type="Self.departement" Multiplicity="1" />
+          <End Role="billet" Type="Self.billet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departement">
+              <PropertyRef Name="idDepartement" />
+            </Principal>
+            <Dependent Role="billet">
+              <PropertyRef Name="idDepartement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_billetEmploye">
+          <End Role="employe" Type="Self.employe" Multiplicity="1" />
+          <End Role="billet" Type="Self.billet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employe">
+              <PropertyRef Name="idEmploye" />
+            </Principal>
+            <Dependent Role="billet">
+              <PropertyRef Name="idEmploye" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_departement">
+          <End Role="departement" Type="Self.departement" Multiplicity="1" />
+          <End Role="employe" Type="Self.employe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departement">
+              <PropertyRef Name="idDepartement" />
+            </Principal>
+            <Dependent Role="employe">
+              <PropertyRef Name="idDepartement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bellEvaluationDBModelStoreContainer">
+          <EntitySet Name="billet" EntityType="Self.billet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="departement" EntityType="Self.departement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employe" EntityType="Self.employe" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Fk_billetDepartement" Association="Self.Fk_billetDepartement">
+            <End Role="departement" EntitySet="departement" />
+            <End Role="billet" EntitySet="billet" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_billetEmploye" Association="Self.Fk_billetEmploye">
+            <End Role="employe" EntitySet="employe" />
+            <End Role="billet" EntitySet="billet" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_departement" Association="Self.Fk_departement">
+            <End Role="departement" EntitySet="departement" />
+            <End Role="employe" EntitySet="employe" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bellEvaluationDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="billet">
+          <Key>
+            <PropertyRef Name="idBillet" />
+          </Key>
+          <Property Name="idBillet" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomProjet" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dateCreation" Type="DateTime" Precision="3" />
+          <Property Name="idDepartement" Type="Int32" Nullable="false" />
+          <Property Name="idEmploye" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="departement" Relationship="Self.Fk_billetDepartement" FromRole="billet" ToRole="departement" />
+          <NavigationProperty Name="employe" Relationship="Self.Fk_billetEmploye" FromRole="billet" ToRole="employe" />
+        </EntityType>
+        <EntityType Name="departement">
+          <Key>
+            <PropertyRef Name="idDepartement" />
+          </Key>
+          <Property Name="idDepartement" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomDepartement" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="billet" Relationship="Self.Fk_billetDepartement" FromRole="departement" ToRole="billet" />
+          <NavigationProperty Name="employe" Relationship="Self.Fk_departement" FromRole="departement" ToRole="employe" />
+        </EntityType>
+        <EntityType Name="employe">
+          <Key>
+            <PropertyRef Name="idEmploye" />
+          </Key>
+          <Property Name="idEmploye" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idDepartement" Type="Int32" Nullable="false" />
+          <Property Name="nomEmploye" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="billet" Relationship="Self.Fk_billetEmploye" FromRole="employe" ToRole="billet" />
+          <NavigationProperty Name="departement" Relationship="Self.Fk_departement" FromRole="employe" ToRole="departement" />
+        </EntityType>
+        <Association Name="Fk_billetDepartement">
+          <End Role="departement" Type="Self.departement" Multiplicity="1" />
+          <End Role="billet" Type="Self.billet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departement">
+              <PropertyRef Name="idDepartement" />
+            </Principal>
+            <Dependent Role="billet">
+              <PropertyRef Name="idDepartement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_billetEmploye">
+          <End Role="employe" Type="Self.employe" Multiplicity="1" />
+          <End Role="billet" Type="Self.billet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employe">
+              <PropertyRef Name="idEmploye" />
+            </Principal>
+            <Dependent Role="billet">
+              <PropertyRef Name="idEmploye" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_departement">
+          <End Role="departement" Type="Self.departement" Multiplicity="1" />
+          <End Role="employe" Type="Self.employe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departement">
+              <PropertyRef Name="idDepartement" />
+            </Principal>
+            <Dependent Role="employe">
+              <PropertyRef Name="idDepartement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bellEvaluationDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="billet" EntityType="Self.billet" />
+          <EntitySet Name="departement" EntityType="Self.departement" />
+          <EntitySet Name="employe" EntityType="Self.employe" />
+          <AssociationSet Name="Fk_billetDepartement" Association="Self.Fk_billetDepartement">
+            <End Role="departement" EntitySet="departement" />
+            <End Role="billet" EntitySet="billet" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_billetEmploye" Association="Self.Fk_billetEmploye">
+            <End Role="employe" EntitySet="employe" />
+            <End Role="billet" EntitySet="billet" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_departement" Association="Self.Fk_departement">
+            <End Role="departement" EntitySet="departement" />
+            <End Role="employe" EntitySet="employe" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bellEvaluationDBModelStoreContainer" CdmEntityContainer="bellEvaluationDBEntities">
+          <EntitySetMapping Name="billet">
+            <EntityTypeMapping TypeName="bellEvaluationDBModel.billet">
+              <MappingFragment StoreEntitySet="billet">
+                <ScalarProperty Name="idBillet" ColumnName="idBillet" />
+                <ScalarProperty Name="nomProjet" ColumnName="nomProjet" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="dateCreation" ColumnName="dateCreation" />
+                <ScalarProperty Name="idDepartement" ColumnName="idDepartement" />
+                <ScalarProperty Name="idEmploye" ColumnName="idEmploye" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="departement">
+            <EntityTypeMapping TypeName="bellEvaluationDBModel.departement">
+              <MappingFragment StoreEntitySet="departement">
+                <ScalarProperty Name="idDepartement" ColumnName="idDepartement" />
+                <ScalarProperty Name="nomDepartement" ColumnName="nomDepartement" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employe">
+            <EntityTypeMapping TypeName="bellEvaluationDBModel.employe">
+              <MappingFragment StoreEntitySet="employe">
+                <ScalarProperty Name="idEmploye" ColumnName="idEmploye" />
+                <ScalarProperty Name="idDepartement" ColumnName="idDepartement" />
+                <ScalarProperty Name="nomEmploye" ColumnName="nomEmploye" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,86 @@
+﻿@model evaluation_Bell.Models.billet
+
+@{
+    ViewBag.Title = "Soumettre";
+}
+
+<h2>Soumettre un Ticket</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form jumbotron ">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group row">
+            @Html.LabelFor(model => model.nomProjet,"", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @Html.EditorFor(model => model.nomProjet, new { htmlAttributes = new { @class = "form-control ", placeholder = "Nom du projet" } })
+                @Html.ValidationMessageFor(model => model.nomProjet, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.idDepartement, "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @if (ViewBag.idDepartement != null)
+                {
+                    @Html.DropDownList("idDepartement", ViewBag.idDepartement as SelectList, "--Choisir un departement--", htmlAttributes: new { @class = "form-control" })
+                }
+                @Html.ValidationMessageFor(model => model.idDepartement, "", new { @class = "text-danger" })
+            </div>
+
+
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.idEmploye, "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("idEmploye", new SelectList(" "), "--Choisir un employe--", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.idEmploye, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.description,"", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10 ">
+                @Html.TextAreaFor(model => model.description,10,118, new { htmlAttributes = new { @class = "form-control  " } })
+                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row ">
+            <div class="col-md-3 offset-md-3">
+                <input type="submit" value="Soumettre" class="btn btn-success btn-lg" />
+
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#idDepartement").change(function () {
+                $.get("/billets/GetEmployeList", { idDepartement: $("#idDepartement").val() }, function (data) {
+                    $("#idEmploye").empty();
+                    $.each(data, function (index, row) {
+                        $("#idEmploye").append("<option value='" + row.idEmploye + "'>" + row.nomEmploye + "</option>")
+                    });
+                });
+            })
+        });
+
+
+    </script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
